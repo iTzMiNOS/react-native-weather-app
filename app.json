@@ -1,4 +1,11 @@
 {
   "name": "WeatherApp",
-  "displayName": "WeatherApp"
+  "displayName": "WeatherApp",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "25467e90-29fc-4ecc-a540-16f8214ed25a"
+      }
+    }
+  }
 }
