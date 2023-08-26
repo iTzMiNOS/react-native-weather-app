@@ -5,17 +5,19 @@ import {Text, View, StyleSheet, SafeAreaView} from 'react-native';
 import RowText from '../components/RowText';
 import { weatherType } from '../utilities/weatherType';
 
-const CurrentWeather = () => {
-  const {wrapper, container, temp, feel, hilo, hilowrap,bodywrap, desc, message } = styles;
+const CurrentWeather = ({weatherData}) => {
+  const {wrapper, container, tmp, feel, hilo, hilowrap,bodywrap, desc, message } = styles;
+  const {main: { temp, feels_like, temp_max, temp_min}, weather} = weatherData;
+  const weatherCondition = weather[0].main;
   return (
-    <SafeAreaView style={wrapper}>
+    <SafeAreaView style={[wrapper, {backgroundColor: weatherType[weatherCondition].backgroundColor}]}>
       <View style={container}>
-        <Feather name="sun" size={100} color="black" />
-        <Text style={temp}>6</Text>
-        <Text style={feel}>Feels like 5</Text>
-        <RowText wrapStyle={hilowrap} text1={'High: 8'} text1s={hilo} text2={'Low: 6'} text2s={hilo} />
+        <Feather name={weatherType[weatherCondition].icon} size={100} color="black" />
+        <Text style={tmp}>{Math.round(temp)}</Text>
+        <Text style={feel}>{`Feels like ${Math.round(feels_like)}`}</Text>
+        <RowText wrapStyle={hilowrap} text1={`High: ${Math.round(temp_max)}`} text1s={hilo} text2={`Low: ${Math.round(temp_min)}`} text2s={hilo} />
       </View>
-      <RowText wrapStyle={bodywrap} text1={'It\'s Sunny'} text1s={desc} text2={'It\'s perfect t-shirt weather'} text2s={message} />
+      <RowText wrapStyle={bodywrap} text1={weather[0].description} text1s={desc} text2={weatherType[weatherCondition].message} text2s={message} />
     </SafeAreaView>
   );
 };
@@ -23,14 +25,13 @@ const CurrentWeather = () => {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: 'pink',
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  temp: {
+  tmp: {
     color: 'black',
     fontSize: 48,
   },
@@ -53,11 +54,11 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: 'black',
-    fontSize: 48,
+    fontSize: 40,
   },
   message: {
     color: 'black',
-    fontSize: 38,
+    fontSize: 30,
   },
 });
 
