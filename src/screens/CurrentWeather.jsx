@@ -8,16 +8,16 @@ import { weatherType } from '../utilities/weatherType';
 const CurrentWeather = ({weatherData}) => {
   const {wrapper, container, tmp, feel, hilo, hilowrap,bodywrap, desc, message } = styles;
   const {main: { temp, feels_like, temp_max, temp_min}, weather} = weatherData;
-  const weatherCondition = weather[0].main;
+  const weatherCondition = weather[0]?.main;
   return (
     <SafeAreaView style={[wrapper, {backgroundColor: weatherType[weatherCondition].backgroundColor}]}>
       <View style={container}>
-        <Feather name={weatherType[weatherCondition].icon} size={100} color="black" />
-        <Text style={tmp}>{Math.round(temp)}</Text>
-        <Text style={feel}>{`Feels like ${Math.round(feels_like)}`}</Text>
-        <RowText wrapStyle={hilowrap} text1={`High: ${Math.round(temp_max)}`} text1s={hilo} text2={`Low: ${Math.round(temp_min)}`} text2s={hilo} />
+        <Feather name={weatherType[weatherCondition]?.icon} size={100} color="black" />
+        <Text style={`${tmp}°`}>{Math.round(temp)}</Text>
+        <Text style={feel}>{`Feels like ${Math.round(feels_like)}°`}</Text>
+        <RowText wrapStyle={hilowrap} text1={`High: ${Math.round(temp_max)}° `} text1s={hilo} text2={`Low: ${Math.round(temp_min)}°`} text2s={hilo} />
       </View>
-      <RowText wrapStyle={bodywrap} text1={weather[0].description} text1s={desc} text2={weatherType[weatherCondition].message} text2s={message} />
+      <RowText wrapStyle={bodywrap} text1={weather[0]?.description} text1s={desc} text2={weatherType[weatherCondition].message} text2s={message} />
     </SafeAreaView>
   );
 };
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   message: {
     color: 'black',
-    fontSize: 30,
+    fontSize: 25,
   },
 });
 
